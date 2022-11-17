@@ -9,9 +9,9 @@ import axios from "axios";
 // window.Promise = Promise;
 
 // eslint-disable-next-line import/no-anonymous-default-export
-const MainClient = ({ headers, accessToken, statusHandler }) => {
+const MainClient = ({ APIRoot, headers, accessToken, statusHandler }) => {
   const service = axios.create({
-    baseURL: process.env.API_ROOT, // url of the api
+    baseURL: APIRoot, // url of the api
     headers: {
       Authorization: accessToken ? "Bearer ".concat(accessToken) : "",
       ...headers,

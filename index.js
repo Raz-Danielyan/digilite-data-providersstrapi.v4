@@ -1,17 +1,17 @@
 import MainClient from "./main-client.js";
 
-const APIProvider = ({ headers = {}, accessToken, statusHandler }) => {
-  const client = MainClient({ headers, accessToken, statusHandler });
+const APIProvider = ({ APIRoot, headers = {}, accessToken, statusHandler }) => {
+  const client = MainClient({ APIRoot, headers, accessToken, statusHandler });
 
-  const convertToV4Params = (params={}) => {
-    const defaultParmasValues= {
-      populate:'*',
-      fields:[],
-      publicationState:'',
-      locale:'',
-      pageSize:'',
-      page:'',
-    }
+  const convertToV4Params = (params = {}) => {
+    const defaultParmasValues = {
+      populate: "*",
+      fields: [],
+      publicationState: "",
+      locale: "",
+      pageSize: "",
+      page: "",
+    };
     const {
       populate,
       fields,
@@ -20,10 +20,10 @@ const APIProvider = ({ headers = {}, accessToken, statusHandler }) => {
       pageSize,
       page,
       ...filters
-    } = {...defaultParmasValues,...params};
+    } = { ...defaultParmasValues, ...params };
 
     return {
-      populate:  populate,
+      populate: populate,
       fields,
       publicationState,
       locale,
@@ -35,13 +35,10 @@ const APIProvider = ({ headers = {}, accessToken, statusHandler }) => {
     };
   };
 
-
-
   const customApi = (url) => ({
-    getMany: (params) =>
-      client.get(url, { params: convertToV4Params(params) }),
+    getMany: (params) => client.get(url, { params: convertToV4Params(params) }),
     getOne: ({ id, ...params }) =>
-      client.get(`${url}/${id}`, { params: convertToV4Params(params)}),
+      client.get(`${url}/${id}`, { params: convertToV4Params(params) }),
     update: (params) => client.put(`${url}/${params.id}`, params.values),
     add: (data) => client.post(url, data),
     delete: (params) => client.delete(`${url}/${params.id}`, { params }),
