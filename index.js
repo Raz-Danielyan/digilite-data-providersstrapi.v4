@@ -1,44 +1,57 @@
 import MainClient from "./main-client.js";
+import Normalize from "./normilize";
 
 const APIProvider = ({ APIRoot, headers = {}, accessToken, statusHandler }) => {
   const client = MainClient({ APIRoot, headers, accessToken, statusHandler });
 
-  const convertToV4Params = (params = {}) => {
+  const getChangedParams = (params = {}) => {
     const defaultParmasValues = {
+      sort: [],
       populate: "*",
       fields: [],
       publicationState: "",
       locale: "",
       pageSize: "",
       page: "",
+      start: "",
+      limit: "",
+      withCount: true,
     };
     const {
+      sort,
       populate,
       fields,
       publicationState,
       locale,
       pageSize,
       page,
+      start,
+      limit,
+      withCount,
       ...filters
     } = { ...defaultParmasValues, ...params };
 
     return {
-      populate: populate,
-      fields,
-      publicationState,
-      locale,
-      filters,
+      sort: { ...sort },
+      populate: typeof populate === "string" ? populate : { ...populate },
+      fields: { ...fields },
+      ...(publicationState ? { publicationState } : {}),
+      ...(locale ? { locale } : {}),
+      filters: filters,
       pagination: {
-        pageSize,
-        page,
+        ...(pageSize ? { pageSize } : {}),
+        ...(page ? { page } : {}),
+        ...(limit ? { limit } : {}),
+        ...(typeof start === "number" ? { start } : {}),
+        withCount,
       },
     };
   };
 
   const customApi = (url) => ({
-    getMany: (params) => client.get(url, { params: convertToV4Params(params) }),
+    getMany: (params) => client.get(url, { params: getChangedParams(params) }),
     getOne: ({ id, ...params }) =>
-      client.get(`${url}/${id}`, { params: convertToV4Params(params) }),
+      client.get(`${url}/${id}`, { params: getChangedParams(params) }),
     update: (params) => client.put(`${url}/${params.id}`, params.values),
     add: (data) => client.post(url, data),
     delete: (params) => client.delete(`${url}/${params.id}`, { params }),
@@ -51,4 +64,4 @@ const APIProvider = ({ APIRoot, headers = {}, accessToken, statusHandler }) => {
   };
 };
 
-export default APIProvider;
+export default { APIProvider, Normalize };
