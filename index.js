@@ -37,12 +37,12 @@ export const APIProvider = ({
     } = { ...defaultParmasValues, ...params };
 
     return {
-      sort: { ...sort },
+      ...(Object.keys(sort).length !== 0 ? { sort: { ...sort } } : {}),
       populate: typeof populate === "string" ? populate : { ...populate },
-      fields: { ...fields },
+      ...(Object.keys(fields).length !== 0 ? { fields: { ...fields } } : {}),
       ...(publicationState ? { publicationState } : {}),
       ...(locale ? { locale } : {}),
-      filters: filters,
+      ...(Object.keys(filters).length !== 0 ? { filters: { ...filters } } : {}),
       pagination: {
         ...(pageSize ? { pageSize } : {}),
         ...(page ? { page } : {}),
