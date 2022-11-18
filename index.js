@@ -1,7 +1,12 @@
 import MainClient from "./main-client.js";
 import Normalize from "./normilize";
 
-const APIProvider = ({ APIRoot, headers = {}, accessToken, statusHandler }) => {
+export const APIProvider = ({
+  APIRoot,
+  headers = {},
+  accessToken,
+  statusHandler,
+}) => {
   const client = MainClient({ APIRoot, headers, accessToken, statusHandler });
 
   const getChangedParams = (params = {}) => {
@@ -64,4 +69,4 @@ const APIProvider = ({ APIRoot, headers = {}, accessToken, statusHandler }) => {
   };
 };
 
-export default { APIProvider, Normalize };
+export const Normalize = Normalize;
