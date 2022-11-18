@@ -1,5 +1,5 @@
 import MainClient from "./main-client.js";
-import Normalize from "./normilize";
+import normalize from "./normilize";
 
 export const APIProvider = ({
   APIRoot,
@@ -69,4 +69,4 @@ export const APIProvider = ({
   };
 };
 
-export const Normalize = Normalize;
+export const Normalize = normalize;
