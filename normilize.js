@@ -14,7 +14,7 @@ const Normalize = (data) => {
   };
 
   if (isArray(data)) {
-    return data.map((item) => normalize(item));
+    return data.map((item) => Normalize(item));
   }
 
   if (isObject(data)) {
@@ -29,7 +29,7 @@ const Normalize = (data) => {
     }
 
     for (const key in data) {
-      data[key] = normalize(data[key]);
+      data[key] = Normalize(data[key]);
     }
 
     return data;
