@@ -36,7 +36,7 @@ const MainClient = ({ APIRoot, headers, accessToken, statusHandler }) => {
           }
         });
         if (!statusFound) {
-          statusHandler?.defaultErrHandler();
+          statusHandler?.defaultErrHandler(error);
         }
       }
 
