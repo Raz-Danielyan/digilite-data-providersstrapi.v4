@@ -10,7 +10,6 @@ import axios from "axios";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 const MainClient = ({ APIRoot, headers, accessToken, statusHandler }) => {
-
   const service = axios.create({
     baseURL: APIRoot, // url of the api
     headers: {
@@ -32,7 +31,7 @@ const MainClient = ({ APIRoot, headers, accessToken, statusHandler }) => {
               "the status type is incorrect, please follow this example 'on404'"
             );
           } else if (errorResponse?.status === Number(item.slice(2))) {
-            statusHandler?.[item]?.();
+            statusHandler?.[item]?.(errorResponse);
             statusFound = true;
           }
         });
