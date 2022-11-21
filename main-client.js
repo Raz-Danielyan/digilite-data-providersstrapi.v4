@@ -31,7 +31,7 @@ const MainClient = ({ APIRoot, headers, accessToken, statusHandler }) => {
               "the status type is incorrect, please follow this example 'on404'"
             );
           } else if (errorResponse?.status === Number(item.slice(2))) {
-            statusHandler?.[item]?.(errorResponse);
+            statusHandler?.[item]?.(error);
             statusFound = true;
           }
         });
