@@ -54,12 +54,15 @@ export const APIProvider = ({
   };
 
   const customApi = (url) => ({
-    getMany: (params) => client.get(url, { params: getChangedParams(params) }),
-    getOne: ({ id, ...params }) =>
-      client.get(`${url}/${id}`, { params: getChangedParams(params) }),
-    update: (params) => client.put(`${url}/${params.id}`, params.values),
-    add: (data) => client.post(url, data),
-    delete: (params) => client.delete(`${url}/${params.id}`, { params }),
+    getMany: ({ headers, ...params }) =>
+      client.get(url, { params: getChangedParams(params), headers }),
+    getOne: ({ id, headers, ...params }) =>
+      client.get(`${url}/${id}`, { params: getChangedParams(params), headers }),
+    update: ({ headers, ...params }) =>
+      client.put(`${url}/${params.id}`, params.values, headers),
+    add: ({ headers, ...data }) => client.post(url, data, headers),
+    delete: ({ headers, ...params }) =>
+      client.delete(`${url}/${params.id}`, { params, headers }),
   });
 
   return function (url, types) {
