@@ -1,14 +1,19 @@
 {
   "name": "digilite-data-providersstrapi.v4",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "",
   "main": "index.js",
   "type": "module",
+  "files": [
+		"index.js",
+    "main-client.js",
+    "normilize.js"
+	],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
   }
 }

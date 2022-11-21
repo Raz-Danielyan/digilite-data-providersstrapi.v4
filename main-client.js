@@ -1,4 +1,4 @@
-import axios from "axios";
+import Axios from "axios";
 
 //
 // Promise.config({
@@ -10,6 +10,14 @@ import axios from "axios";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 const MainClient = ({ APIRoot, headers, accessToken, statusHandler }) => {
+  let axios;
+
+  if (Object.prototype.toString.call(Axios) == "[object Function]") {
+    axios = Axios;
+  } else {
+    axios = new Axios();
+  }
+
   const service = axios.create({
     baseURL: APIRoot, // url of the api
     headers: {
