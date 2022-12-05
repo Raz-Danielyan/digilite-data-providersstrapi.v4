@@ -53,11 +53,17 @@ export const APIProvider = ({
     };
   };
 
-  const customApi = (url) => ({
-    getMany: ({ headers, ...params }) =>
-      client.get(url, { params: getChangedParams(params), headers }),
+  const customApi = (url, customParams) => ({
+    get: ({ headers, ...params }) =>
+      client.get(url, {
+        params: customParams ? getChangedParams(params) : params,
+        headers,
+      }),
     getOne: ({ id, headers, ...params }) =>
-      client.get(`${url}/${id}`, { params: getChangedParams(params), headers }),
+      client.get(`${url}/${id}`, {
+        params: customParams ? getChangedParams(params) : params,
+        headers,
+      }),
     update: ({ headers, ...params }) =>
       client.put(`${url}/${params.id}`, params.values, headers),
     add: ({ headers, ...data }) => client.post(url, data, headers),
@@ -65,9 +71,9 @@ export const APIProvider = ({
       client.delete(`${url}/${params.id}`, { params, headers }),
   });
 
-  return function (url, types) {
+  return function (url, types, customParams = true) {
     return types?.length
-      ? types.map((item) => customApi(url)?.[item])
+      ? types.map((item) => customApi(url, customParams)?.[item])
       : Object.values(customApi(url));
   };
 };
