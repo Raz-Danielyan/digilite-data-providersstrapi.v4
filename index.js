@@ -54,20 +54,25 @@ export const APIProvider = ({
   };
 
   const customApi = (url, customParams) => ({
-    get: ({ headers, ...params }) =>
+    get: ({ headers, ...params } = {}) =>
       client.get(url, {
         params: customParams ? getChangedParams(params) : params,
         headers,
       }),
-    getOne: ({ id, headers, ...params }) =>
+    getOne: ({ id, headers, ...params } = {}) =>
       client.get(`${url}/${id}`, {
         params: customParams ? getChangedParams(params) : params,
         headers,
       }),
-    update: ({ headers, ...params }) =>
+    count: ({ headers, ...params } = {}) =>
+      client.get(`${url}/count`, {
+        params: customParams ? getChangedParams(params) : params,
+        headers,
+      }),
+    update: ({ headers, ...params } = {}) =>
       client.put(`${url}/${params.id}`, params.values, headers),
     add: ({ headers, ...data }) => client.post(url, data, headers),
-    delete: ({ headers, ...params }) =>
+    delete: ({ headers, ...params } = {}) =>
       client.delete(`${url}/${params.id}`, { params, headers }),
   });
 
