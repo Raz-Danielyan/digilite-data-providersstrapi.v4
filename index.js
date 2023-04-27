@@ -50,9 +50,9 @@ export const APIProvider = ({
         ...(page ? { page } : {}),
         ...(limit ? { limit } : {}),
         ...(typeof start === "number" ? { start } : {}),
-        _q,
         withCount,
       },
+      _q,
     };
   };
 
