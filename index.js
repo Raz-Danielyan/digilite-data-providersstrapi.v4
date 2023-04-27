@@ -20,6 +20,7 @@ export const APIProvider = ({
       page: "",
       start: "",
       limit: "",
+      _q: null,
       withCount: true,
     };
     const {
@@ -33,6 +34,7 @@ export const APIProvider = ({
       start,
       limit,
       withCount,
+      _q,
       ...filters
     } = { ...defaultParmasValues, ...params };
 
@@ -48,6 +50,7 @@ export const APIProvider = ({
         ...(page ? { page } : {}),
         ...(limit ? { limit } : {}),
         ...(typeof start === "number" ? { start } : {}),
+        _q,
         withCount,
       },
     };
